@@ -1,0 +1,112 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "AgentNet Guest Tasks",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/guest": {
+      "get": {
+        "operationId": "listGuestCapabilities",
+        "summary": "Read public guest capabilities",
+        "responses": {
+          "200": {
+            "description": "Guest task descriptor"
+          },
+          "451": {
+            "description": "Service restricted by node policy"
+          }
+        }
+      },
+      "post": {
+        "operationId": "runGuestTask",
+        "summary": "Run a free bounded text task",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "skill",
+                  "text"
+                ],
+                "properties": {
+                  "skill": {
+                    "type": "string",
+                    "enum": [
+                      "text-insights",
+                      "sha256"
+                    ]
+                  },
+                  "text": {
+                    "type": "string",
+                    "maxLength": 1000,
+                    "description": "Non-sensitive text."
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Task completed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "task",
+                    "node",
+                    "skill",
+                    "result",
+                    "cost"
+                  ],
+                  "properties": {
+                    "task": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "node": {
+                      "type": "string"
+                    },
+                    "skill": {
+                      "type": "string",
+                      "enum": [
+                        "text-insights",
+                        "sha256"
+                      ]
+                    },
+                    "result": {
+                      "type": "object"
+                    },
+                    "cost": {
+                      "type": "integer",
+                      "const": 0
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid task"
+          },
+          "429": {
+            "description": "Guest capacity reached"
+          },
+          "451": {
+            "description": "Service restricted"
+          }
+        }
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "https://agentnet-amsewada.niftycucumber8.chatgpt.site"
+    }
+  ]
+}

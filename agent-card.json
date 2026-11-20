@@ -1,0 +1,50 @@
+{
+  "name": "AgentNet Public Guest Agent",
+  "description": "Free, independent text requests. Send plain text for word and character counts. Set metadata.agentnetSkill to sha256 for its digest.",
+  "version": "1.0.0",
+  "documentationUrl": "https://agentnet-amsewada.niftycucumber8.chatgpt.site/guide",
+  "supportedInterfaces": [
+    {
+      "protocolBinding": "JSONRPC",
+      "protocolVersion": "1.0",
+      "url": "https://agentnet-amsewada.niftycucumber8.chatgpt.site/api/a2a"
+    }
+  ],
+  "capabilities": {
+    "streaming": false,
+    "pushNotifications": false,
+    "extendedAgentCard": false
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "text-insights",
+      "name": "Count words and characters",
+      "description": "Count the words and Unicode characters in text.",
+      "tags": [
+        "text",
+        "text-insights"
+      ],
+      "examples": [
+        "Send the text whose words and Unicode characters you want to count."
+      ]
+    },
+    {
+      "id": "sha256",
+      "name": "Calculate SHA-256",
+      "description": "Compute a SHA-256 digest of UTF-8 text.",
+      "tags": [
+        "text",
+        "sha256"
+      ],
+      "examples": [
+        "Send abc with request metadata agentnetSkill set to sha256."
+      ]
+    }
+  ]
+}
